@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="es" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Survival Zeta | El Apocalipsis Azul</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        zeta: {
+                            900: '#030712',
+                            800: '#070d1d',
+                            700: '#0a1428',
+                            600: '#0d1f3d',
+                            500: '#0066ff',
+                            400: '#0099ff',
+                            300: '#00f3ff',
+                            glow: '#00f3ff',
+                        },
+                        darkness: '#02040a'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        cyber: ['Orbitron', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts: Orbitron & Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Favicon using the logo -->
+    <link rel="icon" type="image/png" href="logoz.png">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #02040a;
+            color: #f3f4f6;
+            overflow-x: hidden;
+        }
+        .font-cyber {
+            font-family: 'Orbitron', sans-serif;
+        }
+        .neon-glow-blue {
+            text-shadow: 0 0 10px rgba(0, 243, 255, 0.7), 0 0 20px rgba(0, 243, 255, 0.5), 0 0 30px rgba(0, 102, 255, 0.3);
+        }
+        .neon-box-blue {
+            box-shadow: 0 0 15px rgba(0, 243, 255, 0.2), inset 0 0 15px rgba(0, 102, 255, 0.1);
+            border: 1px solid rgba(0, 243, 255, 0.4);
+        }
+        .neon-box-blue:hover {
+            box-shadow: 0 0 25px rgba(0, 243, 255, 0.5), inset 0 0 20px rgba(0, 243, 255, 0.2);
+            border-color: rgba(0, 243, 255, 0.8);
+        }
+        .bg-grid {
+            background-image: linear-gradient(to right, rgba(0, 243, 255, 0.05) 1px, transparent 1px),
+                              linear-gradient(to bottom, rgba(0, 243, 255, 0.05) 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #02040a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #0066ff;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #00f3ff;
+        }
+    </style>
+</head>
+<body class="bg-darkness text-slate-100 bg-grid min-h-screen">
+
+    <!-- Notification Modal -->
+    <div id="notification-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm hidden">
+        <div class="bg-zeta-800 neon-box-blue p-8 rounded-2xl max-w-md w-full mx-4 text-center relative">
+            <div id="modal-icon" class="text-5xl text-zeta-300 mb-4">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+            </div>
+            <h3 id="modal-title" class="font-cyber text-2xl font-bold mb-2 text-white">¡ATENCIÓN SUPERVIVIENTE!</h3>
+            <p id="modal-message" class="text-slate-300 mb-6">Mensaje del sistema...</p>
+            <button onclick="closeModal()" class="w-full py-3 bg-gradient-to-r from-zeta-500 to-zeta-300 text-zeta-900 font-cyber font-bold rounded-xl shadow-lg hover:brightness-110 transition duration-300">
+                ACEPTAR TRANSMISIÓN
+            </button>
+        </div>
+    </div>
+
+    <!-- Navigation Bar -->
+    <nav class="fixed top-0 left-0 right-0 z-40 bg-zeta-900/90 backdrop-blur-md border-b border-zeta-500/30">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="w-11 h-11 rounded-xl bg-zeta-500/10 border border-zeta-300 flex items-center justify-center neon-box-blue overflow-hidden p-1">
+                    <img src="logoz.png" alt="Survival Zeta Logo" class="w-full h-full object-cover rounded-lg filter drop-shadow-[0_0_8px_rgba(0,243,255,0.8)]">
+                </div>
+                <span class="font-cyber font-black text-xl sm:text-2xl tracking-wider text-white neon-glow-blue">SURVIVAL<span class="text-zeta-300">ZETA</span></span>
+            </div>
+            
+            <div class="hidden md:flex items-center space-x-8 font-medium">
+                <a href="#inicio" class="text-slate-300 hover:text-zeta-350 hover:text-zeta-300 transition">Inicio</a>
+                <a href="#eventos" class="text-slate-300 hover:text-zeta-300 transition">Eventos 2027</a>
+                <a href="#experiencia" class="text-slate-300 hover:text-zeta-300 transition">El Juego</a>
+                <a href="#entradas" class="text-slate-300 hover:text-zeta-300 transition">Inscripción</a>
+				<a href="#normas" class="text-slate-300 hover:text-zeta-400 transition">Normas</a>
+            </div>
+
+            <div>
+                <a href="#entradas" class="hidden sm:inline-block px-5 py-2.5 rounded-xl font-cyber text-sm font-bold bg-zeta-500 hover:bg-zeta-400 text-slate-950 transition duration-300 neon-box-blue">
+                    <i class="fa-solid fa-ticket mr-2"></i>ENTRADAS
+                </a>
+                <button onclick="toggleMobileMenu()" class="md:hidden text-slate-300 hover:text-white p-2">
+                    <i class="fa-solid fa-bars text-2xl"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-zeta-900 border-b border-zeta-500/30 px-4 pt-2 pb-6 space-y-3">
+            <a href="#inicio" onclick="toggleMobileMenu()" class="block py-2 text-slate-300 hover:text-zeta-300">Inicio</a>
+            <a href="#eventos" onclick="toggleMobileMenu()" class="block py-2 text-slate-300 hover:text-zeta-300">Eventos 2027</a>
+            <a href="#experiencia" onclick="toggleMobileMenu()" class="block py-2 text-slate-300 hover:text-zeta-300">El Juego</a>
+            <a href="#entradas" onclick="toggleMobileMenu()" class="block py-2 text-zeta-300 font-bold">Inscripción</a>
+			<a href="#normas" class="text-slate-300 hover:text-zeta-400 transition">Normas</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header id="inicio" class="relative pt-32 pb-20 md:pt-48 md:pb-32 flex items-center justify-center overflow-hidden">
+        <!-- Glowing background effects -->
+        <div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-zeta-500/10 rounded-full blur-[120px] pointer-events-none"></div>
+
+        <div class="max-w-5xl mx-auto px-4 text-center relative z-10 flex flex-col items-center">
+            <!-- Hero Featured Logo Badge -->
+            <div class="w-28 h-28 sm:w-36 sm:h-36 mb-8 rounded-full bg-zeta-900 border-2 border-zeta-300 p-2 neon-box-blue flex items-center justify-center animate-pulse shadow-[0_0_30px_rgba(0,243,255,0.4)]">
+                <img src="logoz.png" alt="Survival Zeta Emblem" class="w-full h-full object-cover rounded-full filter drop-shadow-[0_0_12px_rgba(0,243,255,0.9)]">
+            </div>
+
+            <div class="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full bg-zeta-800/80 border border-zeta-500/40 text-zeta-300 text-xs sm:text-sm font-cyber mb-6 neon-box-blue">
+                <span class="w-2 h-2 rounded-full bg-zeta-300 animate-ping"></span>
+                <span>TRANSMISIÓN DE EMERGENCIA // NIVEL ZETA ACTIVADO</span>
+            </div>
+
+            <h1 class="font-cyber text-4xl sm:text-6xl md:text-7xl font-black tracking-tight text-white mb-6 uppercase">
+                Sobrevive al <span class="text-transparent bg-clip-text bg-gradient-to-r from-zeta-300 via-zeta-400 to-zeta-500 neon-glow-blue">Apocalipsis Azul</span>
+            </h1>
+
+            <p class="text-slate-300 text-base sm:text-xl max-w-2xl mx-auto mb-10 font-light leading-relaxed">
+                6 horas de supervivencia real en un mundo tomado por la infección Zeta. Escapa de hordas mutantes, cumple misiones secretas y decide tu bando. ¿Vivirás para contarlo?
+            </p>
+
+            <!-- Countdown Timer -->
+            <div class="mb-10 max-w-xl mx-auto bg-zeta-800/60 backdrop-blur border border-zeta-500/30 rounded-2xl p-4 neon-box-blue">
+                <p class="text-xs font-cyber text-zeta-300 mb-2 uppercase tracking-widest">Próximo Apocalipsis en Vigo</p>
+                <div class="grid grid-cols-4 gap-2 text-center font-cyber">
+                    <div class="bg-zeta-900/80 p-3 rounded-xl border border-zeta-500/20">
+                        <span id="days" class="text-2xl sm:text-3xl font-bold text-white">00</span>
+                        <p class="text-[10px] text-slate-400 uppercase">Días</p>
+                    </div>
+                    <div class="bg-zeta-900/80 p-3 rounded-xl border border-zeta-500/20">
+                        <span id="hours" class="text-2xl sm:text-3xl font-bold text-white">00</span>
+                        <p class="text-[10px] text-slate-400 uppercase">Horas</p>
+                    </div>
+                    <div class="bg-zeta-900/80 p-3 rounded-xl border border-zeta-500/20">
+                        <span id="minutes" class="text-2xl sm:text-3xl font-bold text-white">00</span>
+                        <p class="text-[10px] text-slate-400 uppercase">Minutos</p>
+                    </div>
+                    <div class="bg-zeta-900/80 p-3 rounded-xl border border-zeta-500/20">
+                        <span id="seconds" class="text-2xl sm:text-3xl font-bold text-white text-zeta-300">00</span>
+                        <p class="text-[10px] text-slate-400 uppercase">Segundos</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CTA Buttons -->
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                <a href="#entradas" class="w-full sm:w-auto px-8 py-4 rounded-xl font-cyber font-bold text-zeta-900 bg-gradient-to-r from-zeta-300 via-zeta-400 to-zeta-500 shadow-lg hover:brightness-110 transition duration-300 text-center neon-box-blue">
+                    <i class="fa-solid fa-skull mr-2"></i>COMPRAR ENTRADAS
+                </a>
+                <a href="#eventos" class="w-full sm:w-auto px-8 py-4 rounded-xl font-cyber font-bold text-white bg-zeta-800/80 border border-zeta-500 hover:bg-zeta-700/80 transition duration-300 text-center">
+                    <i class="fa-solid fa-map-location-dot mr-2 text-zeta-300"></i>EVENTOS 2027
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Events Section (October 2027 - Gran Vía CC Vigo & Parada ValMiñor) -->
+    <section id="eventos" class="py-20 bg-zeta-900/50 relative border-t border-b border-zeta-500/20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 flex flex-col items-center">
+                <div class="w-16 h-16 mb-4 rounded-full bg-zeta-800 border border-zeta-300 p-1.5 neon-box-blue flex items-center justify-center">
+                    <img src="logoz.png" alt="Survival Zeta Logo" class="w-full h-full object-cover rounded-full">
+                </div>
+                <span class="text-zeta-300 font-cyber text-sm tracking-widest uppercase">// CALENDARIO DE OPERACIONES</span>
+                <h2 class="font-cyber text-3xl sm:text-5xl font-black mt-2 text-white">EVENTOS OCTUBRE 2027</h2>
+                <p class="text-slate-400 mt-2 max-w-xl mx-auto">Dos fines de semana consecutivos de terror nocturno y adrenalina pura en Galicia.</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 justify-items-center">
+                
+                <!-- Event 1: Gran Via CC Vigo -->
+                <div class="bg-zeta-800/80 rounded-2xl border border-zeta-500/30 overflow-hidden neon-box-blue flex flex-col justify-between transition transform hover:-translate-y-1 w-full max-w-md">
+                    <!-- Contenedor del Cartel en Formato Vertical (Tipo Folio) -->
+                    <div class="relative h-[480px] bg-slate-900 overflow-hidden">
+                        <!-- CAMBIA la ruta "tu-cartel-vigo.jpg" por la de tu imagen de cartel real -->
+                        <img src="tu-cartel-vigo.png" alt="Cartel Gran Vía CC Vigo" class="w-full h-full object-cover hover:scale-105 transition duration-500" onerror="this.src='https://placehold.co/600x850/030712/00f3ff?text=Cartel+Gran+Via+Vigo'">
+                        
+                        <div class="absolute top-4 left-4 bg-zeta-500 text-slate-950 font-cyber font-bold text-xs px-3 py-1 rounded-lg uppercase shadow-lg">
+                            Fin de Semana 3
+                        </div>
+                    </div>
+
+                    <div class="p-6 sm:p-8 flex-1 flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center justify-between mb-3">
+                                <h3 class="font-cyber text-2xl font-bold text-white">CC Gran Vía Vigo</h3>
+                                <span class="text-xs px-2.5 py-1 rounded bg-zeta-500/20 text-zeta-300 border border-zeta-500/40">Centro Comercial</span>
+                            </div>
+                            
+                            <div class="flex items-center text-zeta-300 font-cyber text-xs mb-4">
+                                <i class="fa-solid fa-calendar-days mr-1.5"></i> Sábado, Octubre 2027
+                            </div>
+
+                            <p class="text-slate-300 text-sm mb-6 leading-relaxed">
+                                El complejo científico y sus instalaciones subterráneas se convierten en un la mejor zona segura para el virus Zeta. Pero algo salio mal, ayudanos a combatir la infección.
+                            </p>
+                            
+                            <ul class="space-y-2 text-xs sm:text-sm text-slate-400 mb-6 font-medium">
+                                <li class="flex items-center"><i class="fa-solid fa-clock text-zeta-300 mr-2.5 w-4"></i> 22:00h - 02:00h (4 horas de juego)</li>
+                                <li class="flex items-center"><i class="fa-solid fa-shield-halved text-zeta-300 mr-2.5 w-4"></i> Safe Zone Principal: Plaza Central</li>
+                                <li class="flex items-center"><i class="fa-solid fa-skull text-zeta-300 mr-2.5 w-4"></i> Nivel de Dificultad: Extremo</li>
+                            </ul>
+                        </div>
+                        <button onclick="selectEvent('Gran Vía CC Vigo - Octubre 2027')" class="w-full py-3 bg-zeta-500 hover:bg-zeta-400 text-slate-950 font-cyber font-bold rounded-xl transition duration-300 text-center">
+                            INSCRIBIRSE EN VIGO
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Event 2: Parada ValMiñor -->
+                <div class="bg-zeta-800/80 rounded-2xl border border-zeta-500/30 overflow-hidden neon-box-blue flex flex-col justify-between transition transform hover:-translate-y-1 w-full max-w-md">
+                    <!-- Contenedor del Cartel en Formato Vertical (Tipo Folio) -->
+                    <div class="relative h-[480px] bg-slate-900 overflow-hidden">
+                        <!-- CAMBIA la ruta "tu-cartel-valminor.jpg" por la de tu imagen de cartel real -->
+                        <img src="tu-cartel-valminor.png" alt="Cartel Parada ValMiñor" class="w-full h-full object-cover hover:scale-105 transition duration-500" onerror="this.src='https://placehold.co/600x850/070d1d/0099ff?text=Cartel+ValMi%C3%B1or'">
+                        
+                        <div class="absolute top-4 left-4 bg-zeta-400 text-slate-950 font-cyber font-bold text-xs px-3 py-1 rounded-lg uppercase shadow-lg">
+                            Fin de Semana 4
+                        </div>
+                    </div>
+
+                    <div class="p-6 sm:p-8 flex-1 flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center justify-between mb-3">
+                                <h3 class="font-cyber text-2xl font-bold text-white">Parada ValMiñor</h3>
+                                <span class="text-xs px-2.5 py-1 rounded bg-zeta-500/20 text-zeta-300 border border-zeta-500/40">ZONA RURAL / MIXTA</span>
+                            </div>
+                            
+                            <div class="flex items-center text-zeta-300 font-cyber text-xs mb-4">
+                                <i class="fa-solid fa-calendar-days mr-1.5"></i> Sábado, Octubre 2027
+                            </div>
+
+                            <p class="text-slate-300 text-sm mb-6 leading-relaxed">
+                                Un municipio entero convertido en escenario de supervivencia. Calles oscuras, parques tétricos, edificios municipales y zonas boscosas donde las hordas de zetas te acecharán entre las sombras.
+                            </p>
+                            
+                            <ul class="space-y-2 text-xs sm:text-sm text-slate-400 mb-6 font-medium">
+                                <li class="flex items-center"><i class="fa-solid fa-clock text-zeta-300 mr-2.5 w-4"></i> 22:00h - 04:00h (6 horas de juego)</li>
+                                <li class="flex items-center"><i class="fa-solid fa-shield-halved text-zeta-300 mr-2.5 w-4"></i> Safe Zone Principal: Ayuntamiento</li>
+                                <li class="flex items-center"><i class="fa-solid fa-skull text-zeta-300 mr-2.5 w-4"></i> Nivel de Dificultad: Táctico / Alto</li>
+                            </ul>
+                        </div>
+                        <button onclick="selectEvent('Parada ValMiñor - Octubre 2027')" class="w-full py-3 bg-zeta-500 hover:bg-zeta-400 text-slate-950 font-cyber font-bold rounded-xl transition duration-300 text-center">
+                            INSCRIBIRSE EN VALMIÑOR
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience / About Section -->
+    <section id="experiencia" class="py-20 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <span class="text-zeta-300 font-cyber text-sm tracking-widest uppercase">// PROTOCOLO DE JUEGO</span>
+                <h2 class="font-cyber text-3xl sm:text-5xl font-black mt-2 text-white">¿QUÉ ES SURVIVAL ZETA?</h2>
+                <p class="text-slate-400 mt-2 max-w-xl mx-auto">No es un juego de rol convencional. Es una experiencia de supervivencia extrema en tiempo real.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Card 1 -->
+                <div class="bg-zeta-800/50 p-8 rounded-2xl border border-zeta-500/20 neon-box-blue hover:border-zeta-300 transition duration-300">
+                    <div class="w-14 h-14 rounded-xl bg-zeta-500/20 border border-zeta-300 flex items-center justify-center text-zeta-300 text-2xl mb-6">
+                        <i class="fa-solid fa-person-running"></i>
+                    </div>
+                    <h3 class="font-cyber text-xl font-bold mb-3 text-white">Supervivientes vs Zetas</h3>
+                    <p class="text-slate-300 text-sm leading-relaxed">
+                        Como superviviente, tu objetivo es cumplir misiones secretas repartidas por el mapa y conseguir pistas sin ser cazado por los actores zombi. Si te atrapan, perderás tu vida... ¡pero el juego no termina!
+                    </p>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="bg-zeta-800/50 p-8 rounded-2xl border border-zeta-500/20 neon-box-blue hover:border-zeta-300 transition duration-300">
+                    <div class="w-14 h-14 rounded-xl bg-zeta-500/20 border border-zeta-300 flex items-center justify-center text-zeta-300 text-2xl mb-6">
+                        <i class="fa-solid fa-virus"></i>
+                    </div>
+                    <h3 class="font-cyber text-xl font-bold mb-3 text-white">Pasa al Bando Infectado</h3>
+                    <p class="text-slate-300 text-sm leading-relaxed">
+                        ¿Fuiste cazado? Nuestro equipo de maquillaje profesional te transformará en un temible Zeta. Volverás al juego con un rol totalmente nuevo: dar caza a tus antiguos compañeros de equipo.
+                    </p>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="bg-zeta-800/50 p-8 rounded-2xl border border-zeta-500/20 neon-box-blue hover:border-zeta-300 transition duration-300">
+                    <div class="w-14 h-14 rounded-xl bg-zeta-500/20 border border-zeta-300 flex items-center justify-center text-zeta-300 text-2xl mb-6">
+                        <i class="fa-solid fa-bullseye"></i>
+                    </div>
+                    <h3 class="font-cyber text-xl font-bold mb-3 text-white">Pruebas de Supervivencia</h3>
+                    <p class="text-slate-300 text-sm leading-relaxed">
+                        Interactúa con personajes de la organización, descifra códigos cifrados, encuentra mapas ocultos y toma decisiones críticas bajo presión en plena noche.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Ticket / Registration Form Section -->
+    <section id="entradas" class="py-20 bg-zeta-900/60 border-t border-zeta-500/20 relative">
+        <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <span class="text-zeta-300 font-cyber text-sm tracking-widest uppercase">// ADQUISICIÓN DE CREDENCIALES</span>
+                <h2 class="font-cyber text-3xl sm:text-4xl font-black mt-2 text-white">REGISTRO DE JUGADOR</h2>
+                <p class="text-slate-400 mt-2">Asegura tu plaza antes de que el cupo de supervivientes se agote.</p>
+            </div>
+
+            <div class="bg-zeta-800/90 p-8 sm:p-10 rounded-3xl border border-zeta-500/40 neon-box-blue">
+                <form id="ticket-form" onsubmit="handleRegistration(event)" class="space-y-6">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-xs font-cyber text-zeta-300 uppercase mb-2">Nombre Completo</label>
+                            <input type="text" id="name" required placeholder="Ej. John Doe" class="w-full bg-zeta-900 border border-zeta-500/30 rounded-xl px-4 py-3 text-white placeholder-slate-500 focus:outline-none focus:border-zeta-300 transition">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-cyber text-zeta-300 uppercase mb-2">Correo Electrónico</label>
+                            <input type="email" id="email" required placeholder="superviviente@zeta.es" class="w-full bg-zeta-900 border border-zeta-500/30 rounded-xl px-4 py-3 text-white placeholder-slate-500 focus:outline-none focus:border-zeta-300 transition">
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-xs font-cyber text-zeta-300 uppercase mb-2">Selecciona Operación / Evento</label>
+                            <select id="event-select" class="w-full bg-zeta-900 border border-zeta-500/30 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-zeta-300 transition">
+                                <option value="Gran Vía CC Vigo - Octubre 2027">Gran Vía CC Vigo (Oct 2027)</option>
+                                <option value="Parada ValMiñor - Octubre 2027">Parada ValMiñor (Oct 2027)</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-cyber text-zeta-300 uppercase mb-2">Bando Inicial</label>
+                            <select id="role-select" class="w-full bg-zeta-900 border border-zeta-500/30 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-zeta-300 transition">
+                                <option value="Superviviente">Superviviente</option>
+                                <option value="Zeta (Infectado)">Zeta / Infectado</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                         <label class="block text-xs font-cyber text-zeta-300 uppercase mb-2">Código Promocional (Opcional)</label>
+                         <!-- Se añadió el id="promo-code" y un evento oninput para validar en tiempo real o al escribir -->
+                         <input type="text" id="promo-code" placeholder="Ej. ZETA2027" class="w-full bg-zeta-900 border border-zeta-500/30 rounded-xl px-4 py-3 text-white placeholder-slate-500 focus:outline-none focus:border-zeta-300 transition">
+                         <!-- Contenedor para mostrar si el código es válido o no -->
+                         <p id="promo-message" class="text-xs mt-1 hidden"></p>
+                    </div>
+
+                    <div class="flex items-center space-x-3 pt-2">
+                        <input type="checkbox" id="terms" required class="w-4 h-4 rounded bg-zeta-900 border-zeta-500 text-zeta-500 focus:ring-0">
+                        <label for="terms" class="text-xs text-slate-300">Acepto los términos de supervivencia y las normas de seguridad del evento.</label>
+                    </div>
+
+                    <button type="submit" class="w-full py-4 bg-gradient-to-r from-zeta-500 via-zeta-400 to-zeta-300 text-zeta-900 font-cyber font-black rounded-xl shadow-lg hover:brightness-110 transition duration-300 neon-box-blue tracking-wider uppercase">
+                        <i class="fa-solid fa-barcode mr-2"></i>GENERAR CREDENCIAL DE ACCESO
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+	 <!-- SECCIÓN DE NORMAS - SURVIVAL ZETA -->
+    <section id="normas" class="py-20 bg-slate-950 text-white relative overflow-hidden border-t border-b border-zeta-500/20">
+        <div class="max-w-6xl mx-auto px-4 relative z-10">
+            <div class="text-center mb-16">
+                <span class="text-zeta-400 font-cyber text-sm tracking-widest uppercase bg-zeta-950/80 px-4 py-1.5 rounded-full border border-zeta-500/30 inline-block mb-3">Protocolo de Supervivencia</span>
+                <h2 class="text-3xl md:text-5xl font-extrabold font-cyber tracking-wider text-white">NORMAS DEL <span class="text-zeta-400 drop-shadow-[0_0_15px_rgba(0,162,255,0.6)]">REALGAME</span></h2>
+                <p class="text-slate-400 mt-3 max-w-2xl mx-auto text-sm md:text-base">Para garantizar la seguridad de todos los participantes y el correcto desarrollo de la infección, es obligatorio cumplir el siguiente reglamento bajo penalización de expulsión.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Norma 1 -->
+                <div class="bg-slate-900/80 border border-zeta-500/30 rounded-2xl p-6 hover:border-zeta-400 transition-all duration-300 shadow-[0_0_15px_rgba(0,162,255,0.05)]">
+                    <div class="text-zeta-400 font-cyber text-2xl font-bold mb-3">01</div>
+                    <h3 class="text-lg font-bold font-cyber text-white mb-2">Prohibido el Contacto Físico</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">Está terminantemente prohibido golpear, empujar, zancadillear o forcejear con los actores zombis o con el resto de jugadores. La organización expulsará inmediatamente a quien incumpla esta norma.</p>
+                </div>
+
+                <!-- Norma 2 -->
+                <div class="bg-slate-900/80 border border-zeta-500/30 rounded-2xl p-6 hover:border-zeta-400 transition-all duration-300">
+                    <div class="text-zeta-400 font-cyber text-2xl font-bold mb-3">02</div>
+                    <h3 class="text-lg font-bold font-cyber text-white mb-2">Zona de Infección</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">Si un zombi te toca en cualquier parte del cuerpo o de tu equipamiento visible, estás infectado. Debes acudir al punto de control médico o transformarte siguiendo las instrucciones de la organización.</p>
+                </div>
+
+                <!-- Norma 3 -->
+               <div class="bg-slate-900/80 border border-zeta-500/30 rounded-2xl p-6 hover:border-zeta-400 transition-all duration-300">
+                   <div class="text-zeta-400 font-cyber text-2xl font-bold mb-3">03</div>
+                   <h3 class="text-lg font-bold font-cyber text-white mb-2">Identificación Obligatoria</h3>
+                   <p class="text-slate-400 text-sm leading-relaxed">Debes llevar la brida, pañuelo o acreditación oficial de Survival Zeta visible en todo momento durante el transcurso del evento. Sin ella no se validará tu participación.</p>
+               </div>
+
+               <!-- Norma 4 -->
+               <div class="bg-slate-900/80 border border-zeta-500/30 rounded-2xl p-6 hover:border-zeta-400 transition-all duration-300">
+                   <div class="text-zeta-400 font-cyber text-2xl font-bold mb-3">04</div>
+                   <h3 class="text-lg font-bold font-cyber text-white mb-2">Respeto a las Instalaciones</h3>
+                   <p class="text-slate-400 text-sm leading-relaxed">El evento se realiza en espacios comerciales e infraestructuras reales (como el CC Gran Vía Vigo). Cuida el mobiliario, no forces puertas cerradas y respeta las zonas balizadas como prohibidas.</p>
+               </div>
+
+               <!-- Norma 5 -->
+               <div class="bg-slate-900/80 border border-zeta-500/30 rounded-2xl p-6 hover:border-zeta-400 transition-all duration-300">
+                   <div class="text-zeta-400 font-cyber text-2xl font-bold mb-3">05</div>
+                   <h3 class="text-lg font-bold font-cyber text-white mb-2">Uso de Linternas y Móviles</h3>
+                   <p class="text-slate-400 text-sm leading-relaxed">Está permitido el uso de linternas tácticas moderadas. No deslumbres directamente a los ojos de los actores o personal de seguridad. El uso de teléfonos está limitado según las misiones.</p>
+               </div>
+
+               <!-- Norma 6 -->
+               <div class="bg-slate-900/80 border border-zeta-500/30 rounded-2xl p-6 hover:border-zeta-400 transition-all duration-300">
+                   <div class="text-zeta-400 font-cyber text-2xl font-bold mb-3">06</div>
+                   <h3 class="text-lg font-bold font-cyber text-white mb-2">Menores de Edad</h3>
+                   <p class="text-slate-400 text-sm leading-relaxed">Los menores de 14 a 17 años deben aportar obligatoriamente una autorización firmada por su padre/madre o tutor legal y entregarla en el Check-in el día del evento. Todo aquel mejor de 14, debe ir acompañador de un adulto o tutor legal.</p>
+               </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-zeta-900 border-t border-zeta-500/30 py-12 text-center text-slate-400 text-sm">
+        <div class="max-w-7xl mx-auto px-4 flex flex-col items-center justify-center space-y-4">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-xl bg-zeta-500/20 border border-zeta-300 flex items-center justify-center neon-box-blue overflow-hidden p-1">
+                    <img src="logoz.png" alt="Survival Zeta Logo" class="w-full h-full object-cover rounded-lg">
+                </div>
+                <span class="font-cyber font-black text-lg tracking-wider text-white">SURVIVAL<span class="text-zeta-300">ZETA</span></span>
+            </div>
+            <p class="max-w-md mx-auto text-xs text-slate-500">
+                Experiencia de ocio alternativo inspirada en los grandes eventos de supervivencia en vivo. Todos los derechos reservados © 2027.
+            </p>
+            <div class="flex space-x-6 text-zeta-300 text-lg pt-2">
+                <a href="#" class="hover:text-white transition"><i class="fa-brands fa-facebook"></i></a>
+                <a href="#" class="hover:text-white transition"><i class="fa-brands fa-instagram"></i></a>
+                <a href="#" class="hover:text-white transition"><i class="fa-brands fa-x-twitter"></i></a>
+                <a href="#" class="hover:text-white transition"><i class="fa-brands fa-youtube"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript Logic -->
+    <script>
+        // Toggle Mobile Menu
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        // Countdown Timer Logic (Targeting Octubre 2027)
+        // Setting target date to October 2, 2027 22:00:00
+        const countDownDate = new Date("Oct 2, 2027 22:00:00").getTime();
+
+        const x = setInterval(function() {
+            const now = new Date().getTime();
+            const distance = countDownDate - now;
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById("days").innerText = String(days).padStart(2, '0');
+            document.getElementById("hours").innerText = String(hours).padStart(2, '0');
+            document.getElementById("minutes").innerText = String(minutes).padStart(2, '0');
+            document.getElementById("seconds").innerText = String(seconds).padStart(2, '0');
+
+            if (distance < 0) {
+                clearInterval(x);
+                document.getElementById("days").innerText = "00";
+                document.getElementById("hours").innerText = "00";
+                document.getElementById("minutes").innerText = "00";
+                document.getElementById("seconds").innerText = "00";
+            }
+        }, 1000);
+
+        // Select Event from cards and scroll to form
+        function selectEvent(eventName) {
+            const select = document.getElementById('event-select');
+            for (let i = 0; i < select.options.length; i++) {
+                if (select.options[i].text.includes(eventName.split(' - ')[0])) {
+                    select.selectedIndex = i;
+                    break;
+                }
+            }
+            document.getElementById('entradas').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Custom Modal Handling (replacing alert)
+        function showModal(title, message, isSuccess = true) {
+            const modal = document.getElementById('notification-modal');
+            const modalTitle = document.getElementById('modal-title');
+            const modalMessage = document.getElementById('modal-message');
+            const modalIcon = document.getElementById('modal-icon');
+
+            modalTitle.innerText = title;
+            modalMessage.innerText = message;
+            
+            if (isSuccess) {
+                modalIcon.innerHTML = '<i class="fa-solid fa-circle-check text-zeta-300"></i>';
+            } else {
+                modalIcon.innerHTML = '<i class="fa-solid fa-triangle-exclamation text-zeta-400"></i>';
+            }
+
+            modal.classList.remove('hidden');
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('notification-modal');
+            modal.classList.add('hidden');
+        }
+
+        // Form Submission handler
+        function handleRegistration(event) {
+            event.preventDefault();
+            const name = document.getElementById('name').value;
+            const eventName = document.getElementById('event-select').value;
+            const role = document.getElementById('role-select').value;
+
+            showModal(
+                "¡INSCRIPCIÓN REGISTRADA!", 
+                `Atención ${name}. Tu credencial para "${eventName}" en bando "${role}" ha sido generada con éxito. Revisa tu correo electrónico para descargar tu pase QR de supervivencia.`
+            );
+
+            document.getElementById('ticket-form').reset();
+        }
+    </script>
+</body>
+</html>
